@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  glassfish:
+    build: .
+    ports:
+      - "8090:8080"
+    networks:
+      - mynetwork
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8092:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - glassfish
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
