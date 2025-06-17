@@ -1,0 +1,13 @@
+version: '3'
+services:
+  flask_api:
+    build: ./flask_api
+    ports:
+      - "5050:5050"
+    restart: always
+
+  web:
+    build: ./web
+    ports:
+      - "3030:80"  # nginx default portu 80, dışa 3000 veriliyor
+    restart: always

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Duygu Analizi</title>
+</head>
+<body>
+    <h1>Duygu Analizi</h1>
+    <textarea id="inputText" rows="5" cols="50"></textarea><br>
+    <button onclick="analyze()">Analiz Et</button>
+    <p id="result"></p>
+
+    <script>
+        function analyze() {
+            const text = document.getElementById('inputText').value;
+            fetch('http://localhost:5050/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = "Tahmin: " + data.sentiment;
+            });
+        }
+    </script>
+</body>
+</html>

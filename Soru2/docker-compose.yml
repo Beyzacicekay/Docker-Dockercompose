@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "6060:6060"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/emredb
+      SPRING_DATASOURCE_USERNAME: emre
+      SPRING_DATASOURCE_PASSWORD: sifre
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3040:80"
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:14
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: emredb
+      POSTGRES_USER: emre
+      POSTGRES_PASSWORD: sifre
+
+ 
