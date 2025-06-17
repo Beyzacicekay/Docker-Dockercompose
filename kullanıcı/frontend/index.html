@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kullanıcılar</title>
+</head>
+<body>
+  <h2>Kullanıcı Listesi</h2>
+  <ul id="userList"></ul>
+
+  <script>
+    fetch("http://localhost:5091/users")
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById("userList");
+        data.forEach(name => {
+          const li = document.createElement("li");
+          li.textContent = name;
+          ul.appendChild(li);
+        });
+      })
+      .catch(err => {
+        console.error("Kullanıcılar çekilemedi 😢", err);
+      });
+  </script>
+</body>
+</html>

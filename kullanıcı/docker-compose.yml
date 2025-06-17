@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: flask_backend
+    ports:
+      - "5091:5000"  # Dışarıdan 5090 → Container içi 5000
+    environment:
+      DB_HOST: db
+      DB_NAME: mydb
+      DB_USER: myuser
+      DB_PASSWORD: mypass
+      DB_PORT: 5432
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  frontend:
+    build: ./frontend
+    container_name: static_frontend
+    ports:
+      - "8088:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
